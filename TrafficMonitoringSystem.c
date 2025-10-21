@@ -10,7 +10,6 @@ typedef struct RoadSegment {
     struct RoadSegment* right;
 } RoadSegment;
 
-// Function to create a new road segment node
 RoadSegment* createNode(char* name, int incoming, int outgoing) {
     RoadSegment* newNode = (RoadSegment*)malloc(sizeof(RoadSegment));
     strcpy(newNode->name, name);
@@ -20,7 +19,6 @@ RoadSegment* createNode(char* name, int incoming, int outgoing) {
     return newNode;
 }
 
-// Function to insert a road segment into the BST
 RoadSegment* insertRoadSegment(RoadSegment* root, char* name, int incoming, int outgoing) {
     if (root == NULL) {
         return createNode(name, incoming, outgoing);
@@ -33,7 +31,6 @@ RoadSegment* insertRoadSegment(RoadSegment* root, char* name, int incoming, int 
     return root;
 }
 
-// Function to update traffic data for a road segment
 void updateTraffic(RoadSegment* root, char* name, int incoming, int outgoing) {
     if (root == NULL) {
         printf("Road segment not found.\n");
@@ -50,7 +47,6 @@ void updateTraffic(RoadSegment* root, char* name, int incoming, int outgoing) {
     }
 }
 
-// Function to print traffic details for all road segments
 void printTrafficDetails(RoadSegment* root) {
     if (root != NULL) {
         printTrafficDetails(root->left);
@@ -59,11 +55,10 @@ void printTrafficDetails(RoadSegment* root) {
     }
 }
 
-// Function to suggest alternative routes (based on simple logic)
 void suggestAlternativeRoutes(RoadSegment* root) {
     if (root != NULL) {
         suggestAlternativeRoutes(root->left);
-        if (root->incoming > 10) { // Arbitrary condition for heavy traffic
+        if (root->incoming > 10) { 
             printf("Heavy traffic on %s. Consider alternative routes.\n", root->name);
         }
         suggestAlternativeRoutes(root->right);
@@ -73,24 +68,19 @@ void suggestAlternativeRoutes(RoadSegment* root) {
 int main() {
     RoadSegment* root = NULL;
 
-    // Insert road segments
     root = insertRoadSegment(root, "A-Street", 5, 3);
     root = insertRoadSegment(root, "B-Street", 15, 8);
     root = insertRoadSegment(root, "C-Street", 2, 4);
 
-    // Print initial traffic details
     printf("Initial traffic details:\n");
     printTrafficDetails(root);
 
-    // Update traffic
     updateTraffic(root, "A-Street", 6, 3);
     updateTraffic(root, "B-Street", 20, 9);
 
-    // Print updated traffic details
     printf("\nUpdated traffic details:\n");
     printTrafficDetails(root);
 
-    // Suggest alternative routes
     printf("\nAlternative routes suggestion:\n");
     suggestAlternativeRoutes(root);
 
